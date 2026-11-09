@@ -352,7 +352,7 @@
           <div class="hud">
             <div class="hud-title">
               <b>LỄ HỘI ĐUA GHE NGO</b>
-              <span>TIKTOK LIVE · ĐƯỜNG ĐUA 600 M · SÔNG MASPÉRO</span>
+              <span>TIKTOK LIVE · ĐƯỜNG ĐUA 1.200 M · SÔNG MASPÉRO</span>
             </div>
             <div class="hud-mid">
               <div class="race-status" id="raceStatus">VÁN 1 · CHỜ XUẤT PHÁT</div>
@@ -372,9 +372,9 @@
             </div>
             <div class="track-line" id="trackLine">
               <div class="track-marker" style="left:100%"><em>0m</em></div>
-              <div class="track-marker" style="left:75%"><em>150m</em></div>
-              <div class="track-marker" style="left:50%"><em>300m</em></div>
-              <div class="track-marker" style="left:25%"><em>450m</em></div>
+              <div class="track-marker" style="left:75%"><em>300m</em></div>
+              <div class="track-marker" style="left:50%"><em>600m</em></div>
+              <div class="track-marker" style="left:25%"><em>900m</em></div>
               <div class="track-marker" style="left:0%"><em>ĐÍCH</em></div>
               <div class="track-boat red" id="trackRed" style="left:100%">Đ</div>
               <div class="track-boat green" id="trackGreen" style="left:100%">X</div>
@@ -506,8 +506,8 @@
           <div class="switchrow">
             <span>Cự ly mỗi ván</span>
             <select id="distSelect" aria-label="Cự ly mỗi ván">
-              <option value="1200">1.200 m — chuẩn ghe ngo nam</option>
-              <option value="600" selected>600 m — ván vừa ~2 phút (mặc định)</option>
+              <option value="1200" selected>1.200 m — chuẩn ghe ngo nam, ván ~4 phút (mặc định)</option>
+              <option value="600">600 m — ván vừa ~2 phút</option>
               <option value="300">300 m — ván nhanh</option>
             </select>
           </div>
@@ -559,7 +559,7 @@
     <script>
     (function(){
       "use strict";
-      var TARGET_DEFAULT = 600; // mặc định 600m: giữ nguyên tốc độ ghe như ván 300m (~1 phút) nên ván kéo dài ~2 phút; live chính chọn lại 1.200m ở ô cự ly
+      var TARGET_DEFAULT = 1200; // mặc định 1.200m: tốc độ nền (hệ số 0,60 ở vòng lặp đua) cho ~4,8 m/s khi ghe đủ 8 tay chèo, cộng tap +2m/lượt và tim của khán giả là ~5 m/s nên 1 ván về đích trong ~4 phút (không tính quà); vẫn chọn lại được 600m / 300m ở ô cự ly
       var target = TARGET_DEFAULT;
       var SEATS = 8;
       // Vị trí 8 ghế trên thân ghe khi đã lật ngang (đầu rồng quay trái), theo % bề ngang ảnh ghe:
@@ -925,7 +925,9 @@
             if(rowers > 0){
               // Ghe chỉ vọt tới trong pha kéo nước 5%–55% của nhịp, pha hồi dầm ghe trôi chậm lại — tốc độ tiến khớp nhịp dầm
               var pl = (t.phase > 0.05 && t.phase < 0.55) ? Math.sin(Math.PI * (t.phase - 0.05) / 0.5) : 0;
-              gain(k, rowers * 0.55 * dt * (0.45 + 1.7 * pl));
+              // Hệ số nền 0,60: trung bình pha nhịp cho ~0,99 nên ghe đủ 8 tay chèo tự chèo ~4,8 m/s;
+              // cộng phần khán giả chỉ tap (+2m/lượt) và thả tim (0,4m/tim) là ~5 m/s — ván 1.200m xong trong ~4 phút, không cần quà.
+              gain(k, rowers * 0.60 * dt * (0.45 + 1.7 * pl));
             }
             // rolling speed over last 2.5s
             var cutoff = now - 2500, sum = 0;
