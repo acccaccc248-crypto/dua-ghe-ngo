@@ -384,7 +384,7 @@
           <div class="river" id="river" style="transform:translateX(-160cqw)">
             <div class="course-marks" id="courseMarks" aria-hidden="true"></div>
             <div class="lane l1">
-              <div class="boat red" id="boatRed" style="left:204cqw">
+              <div class="boat red" id="boatRed" style="left:212cqw">
                 <div class="boat-tag">ĐỎ</div>
                 <div class="rowers" data-rowers="red"></div>
                 <div class="steerer" aria-hidden="true">
@@ -417,7 +417,7 @@
               <div class="lane-line"></div>
             </div>
             <div class="lane l2">
-              <div class="boat green" id="boatGreen" style="left:204cqw">
+              <div class="boat green" id="boatGreen" style="left:212cqw">
   <div class="boat-tag">XANH</div>
   <div class="rowers" data-rowers="green"></div>
   <div class="hull">
@@ -597,11 +597,13 @@
       var seatNamesEls = { red: document.querySelector('[data-seat-names="red"]'), green: document.querySelector('[data-seat-names="green"]') };
       var boatEls = { red: $("boatRed"), green: $("boatGreen") };
       /* Camera lia ngang: đường đua nằm trong một "thế giới" rộng 260cqw (gấp 2,6 lần khung hình).
-         Mũi ghe xuất phát ở x=204cqw và bơi sang trái 190cqw tới vạch đích; khung hình chỉ hiện
+         Mũi ghe xuất phát ở x=212cqw và bơi sang trái 198cqw tới vạch đích (đích vẫn ở x=14cqw
+         như trước; điểm xuất phát đã nhít lùi về phía bên phải thêm 8cqw — khoảng 4% quãng bơi —
+         để lúc đứng chờ có thêm khoảng trống phía sau vạch xuất phát); khung hình chỉ hiện
          một cửa sổ 100cqw của thế giới, camera bám theo ghe (xem khối camera trong loop) và cùng
          một translateX được gán cho cả nền sông lẫn mặt sông nên bờ/trang trí trôi ngang qua. */
       var worldBgEl = $("worldBg"), riverEl = $("river");
-      var WORLD_W = 260, BOAT_START = 204, TRAVEL = 190;
+      var WORLD_W = 260, BOAT_START = 212, TRAVEL = 198;
       var camX = WORLD_W - 100; // mở màn: camera ở vạch xuất phát
       var reduceMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
       var boatAnimReady = { green:false, red:false };
